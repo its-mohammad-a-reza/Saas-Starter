@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Organization {
-  id        String @id @default(cuid())
-  name      String
-  slug      String @unique
-  logoUrl   String?
+  id      String  @id @default(cuid())
+  name    String
+  slug    String  @unique
+  logoUrl String?
 
   botName       String  @default("Aria")
   botTone       String  @default("friendly")
@@ -33,7 +33,12 @@ model Organization {
   apiKeys       ApiKey[]
 }
 
-enum Plan { FREE STARTER PRO ENTERPRISE }
+enum Plan {
+  FREE
+  STARTER
+  PRO
+  ENTERPRISE
+}
 
 model User {
   id        String  @id @default(cuid())
@@ -57,10 +62,15 @@ model Member {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+
   @@unique([userId, organizationId])
 }
 
-enum MemberRole { OWNER ADMIN AGENT }
+enum MemberRole {
+  OWNER
+  ADMIN
+  AGENT
+}
 
 model Conversation {
   id      String             @id @default(cuid())
@@ -82,8 +92,19 @@ model Conversation {
   messages   Message[]
 }
 
-enum ConversationStatus { OPEN PENDING ESCALATED RESOLVED SPAM }
-enum Channel            { WIDGET EMAIL API }
+enum ConversationStatus {
+  OPEN
+  PENDING
+  ESCALATED
+  RESOLVED
+  SPAM
+}
+
+enum Channel {
+  WIDGET
+  EMAIL
+  API
+}
 
 model Message {
   id      String      @id @default(cuid())
@@ -99,7 +120,11 @@ model Message {
   createdAt      DateTime     @default(now())
 }
 
-enum MessageRole { USER ASSISTANT SYSTEM }
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
 
 model ApiKey {
   id        String    @id @default(cuid())
